@@ -2,5 +2,11 @@
   float: left;
   width: 100px;
   height: 100px;
+  margin:1px;
   background-color: red;
+  border: 0.213rem solid rgb(0, 0, 0);
+}
+
+.firstTile {
+  clear: left;
 }
