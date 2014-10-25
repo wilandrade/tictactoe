@@ -1,11 +1,41 @@
 "use strict";
 
+var eventSystem = {
+    trigger: function(e){
+        //if there are listeners set to this triggered event, call each 
+        //callback stored for this event.
+        var args = Array.prototype.slice.call(arguments,1 );
+        if(this.listeners[e]){
+            for(var i=0; i<this.listeners[e].length; i++){
+                this.listeners[e][i].apply(null,args);
+            }
+        }
+    },
+    on: function(e, callback){
+        if(!this.listeners[e]){
+            this.listeners[e] = [];
+        }
+
+        this.listeners[e].push(callback);
+    },
+    listeners: {}
+};
+
+var addEventSupport = function(obj) {
+    for(var key in eventSystem){
+        obj[key] = eventSystem[key];
+    }
+    return obj;
+};
+
 var GameBoard = function(){
     this.totalRows = 3; //total amount of rows
     this.totalCols = 3; //total amount of columns
     this.tiles = null;
     this.totalTurns = null;
     this.currentPlayer = null; // one player is 0, other player is 1;
+    addEventSupport(this);
+    this.registerEvents();
     this.initialize();
 
 };
@@ -21,8 +51,14 @@ GameBoard.prototype.initialize =  function (params) {
 
     this.totalTurns = 0;
     this.currentPlayer = 0; // one player is 0, other player is 1;
-    console.log(this.tiles);
+    this.printBoard();
 };
+
+GameBoard.prototype.registerEvents = function(){
+    this.on('win', function(){
+        console.log("HURRAY!!!");
+    });
+}
 
 GameBoard.prototype.printBoard = function(){
     for(var i=0; i<this.totalRows; i++){
@@ -32,14 +68,18 @@ GameBoard.prototype.printBoard = function(){
 
 GameBoard.prototype.togglePiece = function(rowIndex, colIndex) {
     if(rowIndex >= this.totalRows || rowIndex < 0 || colIndex >= this.totalCols || colIndex < 0){
-       return; 
+       return false; 
     }
 
-    if(!this.tiles[rowIndex][colIndex]){
+    if(this.tiles[rowIndex][colIndex] === null){
         this.tiles[rowIndex][colIndex] = this.currentPlayer;
         this.checkForWin();
         this.currentPlayer = (this.currentPlayer + 1) % 2
+        return true; //move was successful
     }
+
+    //Move was unsuccessful
+    return false;
 };
 
 GameBoard.prototype.checkForWin = function() {
@@ -61,6 +101,8 @@ GameBoard.prototype.handleTie = function(){
 
 GameBoard.prototype.handleWin = function(){
     console.log("Player "+ (this.currentPlayer+1) + " Wins!!!")
+    console.log(this)
+    this.trigger('win');
     this.initialize();
 }
 
