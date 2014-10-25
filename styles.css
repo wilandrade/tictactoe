@@ -1,9 +1,22 @@
 .game-board {
-  width: 50%;
-  min-width: 325px;
+  width: 325px;
+  height: 400px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.game-title {
+  text-align: center;
+  font-size: 80px;
+  font-family: serif;
+}
+
+.win-message {
+  text-align: center;
+  font-size: 80px;
+  font-family: serif;
+  color:green;
 }
 
 .tile {

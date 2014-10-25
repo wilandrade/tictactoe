@@ -1,4 +1,4 @@
-var eventSystem = {
+var EventSystem = {
     trigger: function(e){
         //if there are listeners set to this triggered event, call each 
         //callback stored for this event.
@@ -17,10 +17,11 @@ var eventSystem = {
         this.listeners[e].push(callback);
     },
     listeners: {}
-}
+};
+
 var addEventSupport = function(obj) {
-    for(var key in eventSystem){
-        obj[key] = eventSystem[key];
+    for(var key in EventSystem){
+        obj[key] = EventSystem[key];
     }
     return obj;
 };
