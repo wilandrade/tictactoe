@@ -1,8 +1,6 @@
 Tic Tac Toe
 =========
 
-TicTacToe game made in a few hours.
-
 Features:
 * Native DOM API app
   Game was made without use of external tools or libraries.
