@@ -21,15 +21,14 @@
 
 .tile {
   float: left;
-  min-width:70px;
   width: 100px;
   height: 100px;
   margin:1px;
   background-color: rgb(200,200,250);
   border: 0.213rem solid rgb(0, 0, 0);
   text-align: center;
-  font-size: 40px;
-  font-family: serif;
+  font-size: 90px;
+  font-family: arial;
 }
 
 .tile:hover {
